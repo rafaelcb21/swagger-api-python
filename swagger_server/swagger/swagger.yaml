@@ -372,6 +372,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
       - user_auth: []
       x-openapi-router-controller: swagger_server.controllers.customer_controller
@@ -471,6 +477,12 @@ paths:
         schema:
           type: integer
           format: int32
+      requestBody:
+        description: Update customer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
       responses:
         "401":
           description: Unauthorized

@@ -7,7 +7,7 @@ from swagger_server.models.revenue_by_customer import (
 )  # noqa: E501
 from swagger_server.models.revenue_by_month import RevenueByMonth  # noqa: E501
 from swagger_server.models.total_revenue import TotalRevenue  # noqa: E501
-from swagger_server import util
+from swagger_server import db
 from swagger_server.models.error import Error
 from swagger_server.controllers.authorization_controller import (
     check_user_auth,

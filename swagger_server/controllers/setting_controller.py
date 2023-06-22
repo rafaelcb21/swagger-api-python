@@ -1,5 +1,6 @@
 import connexion
 
+from swagger_server import db
 from swagger_server.models.error import Error  # noqa: E501
 from swagger_server.models.setting import Setting  # noqa: E501
 from swagger_server.models.error import Error

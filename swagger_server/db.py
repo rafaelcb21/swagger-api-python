@@ -55,16 +55,14 @@ class Customer(Base):
     cnpj = Column('cnpj', String(14) , nullable=False)
     commercial_name = Column('commercial_name', String(100), nullable=False)
     legal_name = Column('legal_name', String(100), nullable=False)
-    archive = Column('archive', Boolean, default=False, nullable=False)
+    archive = Column('archive', Boolean, default=False, nullable=True)
 
     def __init__(
-        self, id, cnpj, commercial_name, legal_name, archive
+        self, cnpj, commercial_name, legal_name
     ):
-        self.id = id
         self.cnpj = cnpj
         self.commercial_name = commercial_name
         self.legal_name = legal_name
-        self.archive = archive
 
 
 class Revenue(Base):
@@ -81,9 +79,8 @@ class Revenue(Base):
     Customer = relationship('Customer')
 
     def __init__(
-        self, id, invoice_id, accrual_date, amount, description, transaction_date, customer_id
+        self, invoice_id, accrual_date, amount, description, transaction_date, customer_id
     ):
-        self.id = id
         self.invoice_id = invoice_id
         self.accrual_date = accrual_date
         self.amount = amount
@@ -98,12 +95,11 @@ class Category(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     description = Column('description', String(100), nullable=False)
     name = Column('name', String(100), nullable=False)
-    archive = Column('archive', Boolean, default=False, nullable=False)
+    archive = Column('archive', Boolean, default=False, nullable=True)
 
     def __init__(
-        self, id, description, name, archive
+        self, description, name, archive
     ):
-        self.id = id
         self.description = description
         self.name = name
         self.archive = archive
@@ -124,9 +120,8 @@ class Expense(Base):
     Category = relationship('Category')
 
     def __init__(
-        self, id, accrual_date, amount, description, transaction_date, customer_id, category_id
+        self, accrual_date, amount, description, transaction_date, customer_id, category_id
     ):
-        self.id = id
         self.accrual_date = accrual_date
         self.amount = amount
         self.description = description

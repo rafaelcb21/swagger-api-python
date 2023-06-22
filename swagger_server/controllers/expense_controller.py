@@ -1,12 +1,11 @@
 import connexion
-import six
 
 from swagger_server.models.error import Error  # noqa: E501
 from swagger_server.models.expense import Expense  # noqa: E501
 from swagger_server.models.expense_response import (
     ExpenseResponse,
 )  # noqa: E501
-from swagger_server import util
+from swagger_server import db
 from swagger_server.models.error import Error
 from swagger_server.controllers.authorization_controller import (
     check_user_auth,
@@ -23,7 +22,7 @@ def api_vversion_expenses_category_idpost(
 
     :param version: Version number
     :type version: str
-    :param category_id: Category&#x27;s ID
+    :param category_id: Category s ID
     :type category_id: int
     :param body: Expense by category
     :type body: dict | bytes
@@ -55,7 +54,7 @@ def api_vversion_expenses_expense_iddelete(version, expense_id):  # noqa: E501
 
     :param version: Version number
     :type version: str
-    :param expense_id: Expense&#x27;s ID
+    :param expense_id: Expense s ID
     :type expense_id: int
 
     :rtype: None
@@ -83,7 +82,7 @@ def api_vversion_expenses_expense_idput(
 
     :param version: Version number
     :type version: str
-    :param expense_id: Expense&#x27;s ID
+    :param expense_id: Expense s ID
     :type expense_id: int
     :param body: Register expense
     :type body: dict | bytes

@@ -4,7 +4,7 @@ from swagger_server.models.error import Error  # noqa: E501
 from swagger_server.models.get_user import GetUser  # noqa: E501
 from swagger_server.models.user import User  # noqa: E501
 from swagger_server.models.get_user import GetUser  # noqa: E501
-from swagger_server import util, db
+from swagger_server import db
 from swagger_server.controllers.authorization_controller import (
     check_user_auth,
     check_version,
@@ -20,7 +20,7 @@ def api_vversion_users_idget(version, id_):  # noqa: E501
 
     :param version: Version number
     :type version: str
-    :param id: User&#x27;s ID
+    :param id: User s ID
     :type id: int
 
     :rtype: GetUser
@@ -35,23 +35,26 @@ def api_vversion_users_idget(version, id_):  # noqa: E501
 
     if check['test_key'] == 'ok':
         session = db.Session()
-        user_data = session.query(db.User).filter(db.User.id == id_).all()
+        user_data = session.query(db.User).filter(db.User.id == id_).first()
+        
+        if user_data == None:
+            return Error(error='Not Found'), 404
 
-        if len(user_data) > 0:
-            for field in user_data:
-                response = GetUser(
-                    user=User(
-                        name=field.name,
-                        email=field.email,
-                        password=field.password,
-                        cnpj=field.cnpj,
-                        company_name=field.company_name,
-                        phone_number=field.phone_number,
-                    )
-                )
-            session.close()
-            return response, 200
-        return Error(error='Not Found'), 404
+        response = GetUser(
+            user=User(
+                name=user_data.name,
+                email=user_data.email,
+                password=user_data.password,
+                cnpj=user_data.cnpj,
+                company_name=user_data.company_name,
+                phone_number=user_data.phone_number,
+            )
+        )
+
+        session.close()
+
+        return response, 200
+
 
     else:
         return Error(error='Unauthorized'), 401
@@ -64,7 +67,7 @@ def api_vversion_users_idput(version, id_, body=None):  # noqa: E501
 
     :param version: Version number
     :type version: str
-    :param id: User&#x27;s ID
+    :param id: User s ID
     :type id: int
     :param body: Update revenue
     :type body: dict | bytes
@@ -87,6 +90,9 @@ def api_vversion_users_idput(version, id_, body=None):  # noqa: E501
             user_data = (
                 session.query(db.User).filter(db.User.id == id_).first()
             )
+
+            if user_data == None:
+                return Error(error='Not Found'), 404
 
             user_data.cnpj = body.cnpj
             user_data.company_name = body.company_name
@@ -135,6 +141,7 @@ def api_vversion_users_post(version, body=None):  # noqa: E501
             )
             session.add(register)
             session.commit()
+
             user_data = (
                 session.query(db.User)
                 .filter(
@@ -145,15 +152,14 @@ def api_vversion_users_post(version, body=None):  # noqa: E501
                     db.User.password == body.password,
                     db.User.phone_number == body.phone_number,
                 )
-                .all()
+                .first()
             )
 
-            if len(user_data) > 0:
-                for item in user_data:
-                    response = UserResponse(user_id=item.id)
-                session.close()
-                return response, 201
-            else:
-                return Error(error='Unauthorized'), 401
+            response = UserResponse(user_id=user_data.id)
+
+            return response, 201
+
+        return Error(error='Unauthorized'), 401
+
     else:
         return Error(error='Unauthorized'), 401

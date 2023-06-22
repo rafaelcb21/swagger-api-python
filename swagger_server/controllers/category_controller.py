@@ -7,7 +7,7 @@ from swagger_server.models.category_response import (
     CategoryResponse,
 )  # noqa: E501
 from swagger_server.models.error import Error  # noqa: E501
-from swagger_server import util
+from swagger_server import db
 from swagger_server.models.error import Error
 from swagger_server.controllers.authorization_controller import (
     check_user_auth,
@@ -24,7 +24,7 @@ def api_vversion_categories_category_id_archives_put(
 
     :param version: Version number
     :type version: str
-    :param category_id: Category&#x27;s ID
+    :param category_id: Category s ID
     :type category_id: int
 
     :rtype: None
@@ -50,7 +50,7 @@ def api_vversion_categories_category_idget(version, category_id):  # noqa: E501
 
     :param version: Version number
     :type version: str
-    :param category_id: Category&#x27;s ID
+    :param category_id: Category s ID
     :type category_id: int
 
     :rtype: Category
@@ -78,7 +78,7 @@ def api_vversion_categories_category_idput(
 
     :param version: Version number
     :type version: str
-    :param category_id: Category&#x27;s ID
+    :param category_id: Category s ID
     :type category_id: int
     :param body: Update category
     :type body: dict | bytes
@@ -110,7 +110,7 @@ def api_vversion_categories_get(version, name=None):  # noqa: E501
 
     :param version: Version number
     :type version: str
-    :param name: Category&#x27;s name
+    :param name: Category s name
     :type name: str
 
     :rtype: Categories
