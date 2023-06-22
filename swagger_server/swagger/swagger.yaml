@@ -1,0 +1,1316 @@
+openapi: 3.0.0
+info:
+  title: Invoice Management
+  version: 0.0.1
+servers:
+- url: /
+tags:
+- name: Authentication
+- name: User
+- name: Revenue
+- name: Customer
+- name: Report
+- name: Expense
+- name: Category
+- name: Setting
+paths:
+  /api/v{version}/auth:
+    post:
+      tags:
+      - Authentication
+      operationId: api_vversion_auth_post
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Request to authenticate
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        "201":
+          description: Successfully authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-openapi-router-controller: swagger_server.controllers.authentication_controller
+  /api/v{version}/users/sso:
+    post:
+      tags:
+      - Authentication
+      operationId: api_vversion_users_sso_post
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: User authentication by SSO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        "201":
+          description: User successfully registered by SSO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-openapi-router-controller: swagger_server.controllers.authentication_controller
+  /api/v{version}/users:
+    post:
+      tags:
+      - User
+      operationId: api_vversion_users_post
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Register user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "201":
+          description: User successfully registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /api/v{version}/users/{ID}:
+    get:
+      tags:
+      - User
+      operationId: api_vversion_users_idget
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: ID
+        in: path
+        description: User's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: User founded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUser'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    put:
+      tags:
+      - User
+      operationId: api_vversion_users_idput
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: ID
+        in: path
+        description: User's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: User successfully updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /api/v{version}/revenues/{customerID}:
+    post:
+      tags:
+      - Revenue
+      operationId: api_vversion_revenues_customer_idpost
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: customerID
+        in: path
+        description: Customer's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Register revenue
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Revenue'
+      responses:
+        "201":
+          description: Revenue successfully registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevenueResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.revenue_controller
+  /api/v{version}/revenues/{revenueID}:
+    put:
+      tags:
+      - Revenue
+      operationId: api_vversion_revenues_revenue_idput
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: revenueID
+        in: path
+        description: Revenue's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Update revenue
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Revenue'
+      responses:
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.revenue_controller
+    delete:
+      tags:
+      - Revenue
+      operationId: api_vversion_revenues_revenue_iddelete
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: revenueID
+        in: path
+        description: Revenue's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.revenue_controller
+  /api/v{version}/customers:
+    get:
+      tags:
+      - Customer
+      operationId: api_vversion_customers_get
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Customer's name
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: cnpj
+        in: query
+        description: Customer's cnpj
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Customer founded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCustomers'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.customer_controller
+    post:
+      tags:
+      - Customer
+      operationId: api_vversion_customers_post
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Register customer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        "201":
+          description: Customer successfully registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.customer_controller
+  /api/v{version}/customers/{customerID}:
+    get:
+      tags:
+      - Customer
+      operationId: api_vversion_customers_customer_idget
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: customerID
+        in: path
+        description: Customer's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Customer founded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCustomer'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.customer_controller
+    put:
+      tags:
+      - Customer
+      operationId: api_vversion_customers_customer_idput
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: customerID
+        in: path
+        description: Customer's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.customer_controller
+  /api/v{version}/customers/{customerID}/archives:
+    put:
+      tags:
+      - Customer
+      operationId: api_vversion_customers_customer_id_archives_put
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: customerID
+        in: path
+        description: Customer's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.customer_controller
+  /api/v{version}/reports/total-revenue:
+    post:
+      tags:
+      - Report
+      operationId: api_vversion_reports_total_revenue_post
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Register customer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiscalYear'
+      responses:
+        "201":
+          description: Total revenue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalRevenue'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.report_controller
+  /api/v{version}/reports/revenue-by-month:
+    post:
+      tags:
+      - Report
+      operationId: api_vversion_reports_revenue_by_month_post
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Fiscal Year
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiscalYear'
+      responses:
+        "201":
+          description: Revenue by month
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevenueByMonth'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.report_controller
+  /api/v{version}/reports/revenue-by-customer:
+    post:
+      tags:
+      - Report
+      operationId: api_vversion_reports_revenue_by_customer_post
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Fiscal Year
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiscalYear'
+      responses:
+        "201":
+          description: Revenue by customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevenueByCustomer'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.report_controller
+  /api/v{version}/expenses/{categoryID}:
+    post:
+      tags:
+      - Expense
+      operationId: api_vversion_expenses_category_idpost
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: categoryID
+        in: path
+        description: Category's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Expense by category
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Expense'
+      responses:
+        "201":
+          description: Expense's ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.expense_controller
+  /api/v{version}/expenses/{expenseID}:
+    put:
+      tags:
+      - Expense
+      operationId: api_vversion_expenses_expense_idput
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: expenseID
+        in: path
+        description: Expense's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Register expense
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Expense'
+      responses:
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.expense_controller
+    delete:
+      tags:
+      - Expense
+      operationId: api_vversion_expenses_expense_iddelete
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: expenseID
+        in: path
+        description: Expense's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.expense_controller
+  /api/v{version}/categories:
+    get:
+      tags:
+      - Category
+      operationId: api_vversion_categories_get
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Category's name
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Categories founded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categories'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.category_controller
+    post:
+      tags:
+      - Category
+      operationId: api_vversion_categories_post
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Register category
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        "201":
+          description: Expense's ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.category_controller
+  /api/v{version}/categories/{categoryID}:
+    get:
+      tags:
+      - Category
+      operationId: api_vversion_categories_category_idget
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: categoryID
+        in: path
+        description: Category's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Category founded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.category_controller
+    put:
+      tags:
+      - Category
+      operationId: api_vversion_categories_category_idput
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: categoryID
+        in: path
+        description: Category's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Update category
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.category_controller
+  /api/v{version}/categories/{categoryID}/archives:
+    put:
+      tags:
+      - Category
+      operationId: api_vversion_categories_category_id_archives_put
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: categoryID
+        in: path
+        description: Category's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.category_controller
+  /api/v{version}/settings:
+    get:
+      tags:
+      - Setting
+      operationId: api_vversion_settings_get
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Setting'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.setting_controller
+    put:
+      tags:
+      - Setting
+      operationId: api_vversion_settings_put
+      parameters:
+      - name: version
+        in: path
+        description: Version number
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Setting notification
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Setting'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Setting'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - user_auth: []
+      x-openapi-router-controller: swagger_server.controllers.setting_controller
+components:
+  schemas:
+    Login:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+      example:
+        user:
+          password: password
+          company_name: company_name
+          name: name
+          phone_number: phone_number
+          cnpj: cnpj
+          email: email
+        token: token
+    Token:
+      type: object
+      properties:
+        login:
+          type: string
+        app_token:
+          type: string
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        cnpj:
+          type: string
+        company_name:
+          type: string
+        phone_number:
+          type: string
+      example:
+        password: password
+        company_name: company_name
+        name: name
+        phone_number: phone_number
+        cnpj: cnpj
+        email: email
+    GetUser:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+      example:
+        user:
+          password: password
+          company_name: company_name
+          name: name
+          phone_number: phone_number
+          cnpj: cnpj
+          email: email
+    UserResponse:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          format: int32
+      example:
+        user_id: 0
+    Customer:
+      type: object
+      properties:
+        cnpj:
+          type: string
+        commercial_name:
+          type: string
+        legal_name:
+          type: string
+      example:
+        commercial_name: commercial_name
+        cnpj: cnpj
+        legal_name: legal_name
+    CustomerResponse:
+      type: object
+      properties:
+        customer_id:
+          type: integer
+          format: int32
+      example:
+        customer_id: 0
+    GetCustomer:
+      type: object
+      properties:
+        customer:
+          $ref: '#/components/schemas/Customer'
+      example:
+        customer:
+          commercial_name: commercial_name
+          cnpj: cnpj
+          legal_name: legal_name
+    GetCustomers:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+      example:
+        count: 0
+        customers:
+        - commercial_name: commercial_name
+          cnpj: cnpj
+          legal_name: legal_name
+        - commercial_name: commercial_name
+          cnpj: cnpj
+          legal_name: legal_name
+    Revenue:
+      type: object
+      properties:
+        amount:
+          type: number
+        invoice_id:
+          type: string
+        description:
+          type: string
+        accrual_date:
+          type: string
+        transaction_date:
+          type: string
+    RevenueResponse:
+      type: object
+      properties:
+        revenue_id:
+          type: integer
+          format: int32
+      example:
+        revenue_id: 0
+    FiscalYear:
+      type: object
+      properties:
+        fiscal_year:
+          type: integer
+          format: int32
+    TotalRevenue:
+      type: object
+      properties:
+        total_revenue:
+          type: number
+        max_revenue_amount:
+          type: number
+      example:
+        total_revenue: 0.80082819046101150206595775671303272247314453125
+        max_revenue_amount: 6.02745618307040320615897144307382404804229736328125
+    MonthRevenue:
+      type: object
+      properties:
+        month_name:
+          type: string
+        month_revenue:
+          type: number
+      example:
+        month_name: month_name
+        month_revenue: 6.02745618307040320615897144307382404804229736328125
+    CustomerRevenue:
+      type: object
+      properties:
+        customer_name:
+          type: string
+        revenue:
+          type: number
+      example:
+        revenue: 6.02745618307040320615897144307382404804229736328125
+        customer_name: customer_name
+    RevenueByMonth:
+      type: object
+      properties:
+        max_revenue_amount:
+          type: number
+        revenue:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthRevenue'
+      example:
+        revenue:
+        - month_name: month_name
+          month_revenue: 6.02745618307040320615897144307382404804229736328125
+        - month_name: month_name
+          month_revenue: 6.02745618307040320615897144307382404804229736328125
+        max_revenue_amount: 0.80082819046101150206595775671303272247314453125
+    RevenueByCustomer:
+      type: object
+      properties:
+        max_revenue_amount:
+          type: number
+        revenue:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerRevenue'
+      example:
+        revenue:
+        - revenue: 6.02745618307040320615897144307382404804229736328125
+          customer_name: customer_name
+        - revenue: 6.02745618307040320615897144307382404804229736328125
+          customer_name: customer_name
+        max_revenue_amount: 0.80082819046101150206595775671303272247314453125
+    Expense:
+      type: object
+      properties:
+        amount:
+          type: number
+        description:
+          type: string
+        accrual_date:
+          type: string
+        transaction_date:
+          type: string
+        customer_id:
+          type: integer
+    ExpenseResponse:
+      type: object
+      properties:
+        expense_id:
+          type: integer
+      example:
+        expense_id: 0
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      example:
+        name: name
+        description: description
+    CategoryResponse:
+      type: object
+      properties:
+        category_id:
+          type: integer
+      example:
+        category_id: 0
+    Categories:
+      type: object
+      properties:
+        count:
+          type: integer
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+      example:
+        count: 0
+        categories:
+        - name: name
+          description: description
+        - name: name
+          description: description
+    Setting:
+      type: object
+      properties:
+        max_revenue_amount:
+          type: number
+        sms_notification:
+          type: boolean
+        email_notification:
+          type: boolean
+      example:
+        max_revenue_amount: 0.80082819046101150206595775671303272247314453125
+        email_notification: true
+        sms_notification: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+  securitySchemes:
+    user_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_user_auth
+
