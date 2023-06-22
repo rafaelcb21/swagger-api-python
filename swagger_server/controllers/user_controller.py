@@ -132,12 +132,12 @@ def api_vversion_users_post(version, body=None):  # noqa: E501
 
             session = db.Session()
             register = db.User(
-                body.cnpj,
-                body.company_name,
-                body.email,
-                body.name,
-                body.password,
-                body.phone_number,
+                cnpj=body.cnpj,
+                company_name=body.company_name,
+                email=body.email,
+                name=body.name,
+                password=body.password,
+                phone_number=body.phone_number,
             )
             session.add(register)
             session.commit()

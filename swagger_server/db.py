@@ -93,16 +93,15 @@ class Category(Base):
     __tablename__ = 'Category'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    description = Column('description', String(100), nullable=False)
     name = Column('name', String(100), nullable=False)
+    description = Column('description', String(100), nullable=False)
     archive = Column('archive', Boolean, default=False, nullable=True)
 
     def __init__(
-        self, description, name, archive
+        self, name, description
     ):
-        self.description = description
         self.name = name
-        self.archive = archive
+        self.description = description
 
 
 class Expense(Base):

@@ -181,7 +181,7 @@ def api_vversion_customers_get(version, name=None, cnpj=None):  # noqa: E501
             customers = list()
 
             for i in user_data:
-                customers.append([i.cnpj, i.commercial_name, i.legal_name])
+                customers.append(Customer(cnpj=i.cnpj, commercial_name=i.commercial_name, legal_name=i.legal_name))
 
             response = GetCustomers(
                 count=len(customers),
@@ -221,9 +221,9 @@ def api_vversion_customers_post(version, body=None):  # noqa: E501
 
             session = db.Session()
             register = db.Customer(
-                body.cnpj,
-                body.commercial_name,
-                body.legal_name
+                cnpj=body.cnpj,
+                commercial_name=body.commercial_name,
+                legal_name=body.legal_name
             )
             session.add(register)
             session.commit()

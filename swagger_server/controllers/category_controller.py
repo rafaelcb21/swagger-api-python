@@ -37,7 +37,18 @@ def api_vversion_categories_category_id_archives_put(
     check = check_user_auth(token)
 
     if check['test_key'] == 'ok':
-        return 'do some magic!'
+        session = db.Session()
+        user_data = (
+            session.query(db.Category).filter(db.Category.id == category_id).first()
+        )
+
+        if user_data == None:
+            return Error(error='Not Found'), 404
+
+        user_data.archive = True
+
+        session.commit()
+        session.close()
 
     else:
         return Error(error='Unauthorized'), 401
@@ -63,7 +74,20 @@ def api_vversion_categories_category_idget(version, category_id):  # noqa: E501
     check = check_user_auth(token)
 
     if check['test_key'] == 'ok':
-        return 'do some magic!'
+        session = db.Session()
+        user_data = session.query(db.Category).filter(db.Category.id == category_id).first()
+
+        if user_data == None:
+            return Error(error='Not Found'), 404
+
+        response = Category(
+            description=user_data.description,
+            name=user_data.name
+        )
+
+        session.close()
+
+        return response, 200
 
     else:
         return Error(error='Unauthorized'), 401
@@ -97,7 +121,20 @@ def api_vversion_categories_category_idput(
             body = Category.from_dict(
                 connexion.request.get_json()
             )  # noqa: E501
-        return 'do some magic!'
+
+            session = db.Session()
+            user_data = (
+                session.query(db.Category).filter(db.Category.id == category_id).first()
+            )
+
+            if user_data == None:
+                return Error(error='Not Found'), 404
+            
+            user_data.description = body.description
+            user_data.name = body.name
+
+            session.commit()
+            session.close()
 
     else:
         return Error(error='Unauthorized'), 401
@@ -123,7 +160,28 @@ def api_vversion_categories_get(version, name=None):  # noqa: E501
     check = check_user_auth(token)
 
     if check['test_key'] == 'ok':
-        return 'do some magic!'
+        session = db.Session()
+
+        if name is None:
+            user_data = session.query(db.Category).all()
+        else:
+            user_data = session.query(db.Category).filter(db.Category.name == name).all()
+        
+        if len(user_data) == 0:
+            return Error(error='Not Found'), 404
+
+        elif len(user_data) > 0:
+            categories = list()
+
+            for i in user_data:
+                categories.append(Category(name=i.name, description=i.description))
+
+            response = Categories(
+                count=len(categories),
+                categories=categories)
+            session.close()
+
+            return response, 201
 
     else:
         return Error(error='Unauthorized'), 401
@@ -153,7 +211,28 @@ def api_vversion_categories_post(version, body=None):  # noqa: E501
             body = Category.from_dict(
                 connexion.request.get_json()
             )  # noqa: E501
-        return 'do some magic!'
+            session = db.Session()
+            register = db.Category(
+                name=body.name,
+                description=body.description
+            )
+            session.add(register)
+            session.commit()
+
+            user_data = (
+                session.query(db.Category)
+                .filter(
+                    db.Category.name == body.name,
+                    db.Category.description == body.description
+                )
+                .first()
+            )
+
+            response = CategoryResponse(category_id=user_data.id)
+
+            return response, 201
+
+        return Error(error='Unauthorized'), 401
 
     else:
         return Error(error='Unauthorized'), 401
