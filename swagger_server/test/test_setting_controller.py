@@ -16,23 +16,28 @@ class TestSettingController(BaseTestCase):
     def test_api_vversion_settings_get(self):
         """Test case for api_vversion_settings_get"""
         response = self.client.open(
-            "/api/v{version}/settings".format(version="version_example"), method="GET"
+            '/api/v{version}/settings'.format(version='version_example'),
+            method='GET',
         )
-        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
+        self.assert200(
+            response, 'Response body is : ' + response.data.decode('utf-8')
+        )
 
     def test_api_vversion_settings_put(self):
         """Test case for api_vversion_settings_put"""
         body = Setting()
         response = self.client.open(
-            "/api/v{version}/settings".format(version="version_example"),
-            method="PUT",
+            '/api/v{version}/settings'.format(version='version_example'),
+            method='PUT',
             data=json.dumps(body),
-            content_type="application/json",
+            content_type='application/json',
         )
-        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
+        self.assert200(
+            response, 'Response body is : ' + response.data.decode('utf-8')
+        )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import unittest
 
     unittest.main()

@@ -26,14 +26,14 @@ class GetCustomers(Model):
         :param customers: The customers of this GetCustomers.  # noqa: E501
         :type customers: List[Customer]
         """
-        self.swagger_types = {"count": int, "customers": List[Customer]}
+        self.swagger_types = {'count': int, 'customers': List[Customer]}
 
-        self.attribute_map = {"count": "count", "customers": "customers"}
+        self.attribute_map = {'count': 'count', 'customers': 'customers'}
         self._count = count
         self._customers = customers
 
     @classmethod
-    def from_dict(cls, dikt) -> "GetCustomers":
+    def from_dict(cls, dikt) -> 'GetCustomers':
         """Returns the dict as a model
 
         :param dikt: A dict.

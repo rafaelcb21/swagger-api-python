@@ -37,19 +37,19 @@ class Revenue(Model):
         :type transaction_date: str
         """
         self.swagger_types = {
-            "amount": float,
-            "invoice_id": str,
-            "description": str,
-            "accrual_date": str,
-            "transaction_date": str,
+            'amount': float,
+            'invoice_id': str,
+            'description': str,
+            'accrual_date': str,
+            'transaction_date': str,
         }
 
         self.attribute_map = {
-            "amount": "amount",
-            "invoice_id": "invoice_id",
-            "description": "description",
-            "accrual_date": "accrual_date",
-            "transaction_date": "transaction_date",
+            'amount': 'amount',
+            'invoice_id': 'invoice_id',
+            'description': 'description',
+            'accrual_date': 'accrual_date',
+            'transaction_date': 'transaction_date',
         }
         self._amount = amount
         self._invoice_id = invoice_id
@@ -58,7 +58,7 @@ class Revenue(Model):
         self._transaction_date = transaction_date
 
     @classmethod
-    def from_dict(cls, dikt) -> "Revenue":
+    def from_dict(cls, dikt) -> 'Revenue':
         """Returns the dict as a model
 
         :param dikt: A dict.

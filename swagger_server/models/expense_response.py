@@ -21,13 +21,13 @@ class ExpenseResponse(Model):
         :param expense_id: The expense_id of this ExpenseResponse.  # noqa: E501
         :type expense_id: int
         """
-        self.swagger_types = {"expense_id": int}
+        self.swagger_types = {'expense_id': int}
 
-        self.attribute_map = {"expense_id": "expense_id"}
+        self.attribute_map = {'expense_id': 'expense_id'}
         self._expense_id = expense_id
 
     @classmethod
-    def from_dict(cls, dikt) -> "ExpenseResponse":
+    def from_dict(cls, dikt) -> 'ExpenseResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

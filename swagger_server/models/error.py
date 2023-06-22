@@ -21,13 +21,13 @@ class Error(Model):
         :param error: The error of this Error.  # noqa: E501
         :type error: str
         """
-        self.swagger_types = {"error": str}
+        self.swagger_types = {'error': str}
 
-        self.attribute_map = {"error": "error"}
+        self.attribute_map = {'error': 'error'}
         self._error = error
 
     @classmethod
-    def from_dict(cls, dikt) -> "Error":
+    def from_dict(cls, dikt) -> 'Error':
         """Returns the dict as a model
 
         :param dikt: A dict.

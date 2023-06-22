@@ -21,13 +21,13 @@ class RevenueResponse(Model):
         :param revenue_id: The revenue_id of this RevenueResponse.  # noqa: E501
         :type revenue_id: int
         """
-        self.swagger_types = {"revenue_id": int}
+        self.swagger_types = {'revenue_id': int}
 
-        self.attribute_map = {"revenue_id": "revenue_id"}
+        self.attribute_map = {'revenue_id': 'revenue_id'}
         self._revenue_id = revenue_id
 
     @classmethod
-    def from_dict(cls, dikt) -> "RevenueResponse":
+    def from_dict(cls, dikt) -> 'RevenueResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

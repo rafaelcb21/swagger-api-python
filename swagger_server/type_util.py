@@ -21,7 +21,7 @@ else:
 
     def is_generic(klass):
         """Determine whether klass is a generic class"""
-        return hasattr(klass, "__origin__")
+        return hasattr(klass, '__origin__')
 
     def is_dict(klass):
         """Determine whether klass is a Dict"""

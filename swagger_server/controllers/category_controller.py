@@ -3,7 +3,9 @@ import six
 
 from swagger_server.models.categories import Categories  # noqa: E501
 from swagger_server.models.category import Category  # noqa: E501
-from swagger_server.models.category_response import CategoryResponse  # noqa: E501
+from swagger_server.models.category_response import (
+    CategoryResponse,
+)  # noqa: E501
 from swagger_server.models.error import Error  # noqa: E501
 from swagger_server import util
 from swagger_server.models.error import Error
@@ -27,18 +29,18 @@ def api_vversion_categories_category_id_archives_put(
 
     :rtype: None
     """
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
-        return "do some magic!"
+    if check['test_key'] == 'ok':
+        return 'do some magic!'
 
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401
 
 
 def api_vversion_categories_category_idget(version, category_id):  # noqa: E501
@@ -53,18 +55,18 @@ def api_vversion_categories_category_idget(version, category_id):  # noqa: E501
 
     :rtype: Category
     """
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
-        return "do some magic!"
+    if check['test_key'] == 'ok':
+        return 'do some magic!'
 
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401
 
 
 def api_vversion_categories_category_idput(
@@ -83,20 +85,22 @@ def api_vversion_categories_category_idput(
 
     :rtype: None
     """
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
+    if check['test_key'] == 'ok':
         if connexion.request.is_json:
-            body = Category.from_dict(connexion.request.get_json())  # noqa: E501
-        return "do some magic!"
+            body = Category.from_dict(
+                connexion.request.get_json()
+            )  # noqa: E501
+        return 'do some magic!'
 
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401
 
 
 def api_vversion_categories_get(version, name=None):  # noqa: E501
@@ -111,18 +115,18 @@ def api_vversion_categories_get(version, name=None):  # noqa: E501
 
     :rtype: Categories
     """
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
-        return "do some magic!"
+    if check['test_key'] == 'ok':
+        return 'do some magic!'
 
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401
 
 
 def api_vversion_categories_post(version, body=None):  # noqa: E501
@@ -137,17 +141,19 @@ def api_vversion_categories_post(version, body=None):  # noqa: E501
 
     :rtype: CategoryResponse
     """
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
+    if check['test_key'] == 'ok':
         if connexion.request.is_json:
-            body = Category.from_dict(connexion.request.get_json())  # noqa: E501
-        return "do some magic!"
+            body = Category.from_dict(
+                connexion.request.get_json()
+            )  # noqa: E501
+        return 'do some magic!'
 
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401

@@ -37,19 +37,19 @@ class Expense(Model):
         :type customer_id: int
         """
         self.swagger_types = {
-            "amount": float,
-            "description": str,
-            "accrual_date": str,
-            "transaction_date": str,
-            "customer_id": int,
+            'amount': float,
+            'description': str,
+            'accrual_date': str,
+            'transaction_date': str,
+            'customer_id': int,
         }
 
         self.attribute_map = {
-            "amount": "amount",
-            "description": "description",
-            "accrual_date": "accrual_date",
-            "transaction_date": "transaction_date",
-            "customer_id": "customer_id",
+            'amount': 'amount',
+            'description': 'description',
+            'accrual_date': 'accrual_date',
+            'transaction_date': 'transaction_date',
+            'customer_id': 'customer_id',
         }
         self._amount = amount
         self._description = description
@@ -58,7 +58,7 @@ class Expense(Model):
         self._customer_id = customer_id
 
     @classmethod
-    def from_dict(cls, dikt) -> "Expense":
+    def from_dict(cls, dikt) -> 'Expense':
         """Returns the dict as a model
 
         :param dikt: A dict.

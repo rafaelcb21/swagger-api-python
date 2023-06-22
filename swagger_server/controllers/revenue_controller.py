@@ -1,9 +1,10 @@
 import connexion
-import six
 
 from swagger_server.models.error import Error  # noqa: E501
 from swagger_server.models.revenue import Revenue  # noqa: E501
-from swagger_server.models.revenue_response import RevenueResponse  # noqa: E501
+from swagger_server.models.revenue_response import (
+    RevenueResponse,
+)  # noqa: E501
 from swagger_server import util
 from swagger_server.models.error import Error
 from swagger_server.controllers.authorization_controller import (
@@ -28,20 +29,22 @@ def api_vversion_revenues_customer_idpost(
 
     :rtype: RevenueResponse
     """
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
+    if check['test_key'] == 'ok':
         if connexion.request.is_json:
-            body = Revenue.from_dict(connexion.request.get_json())  # noqa: E501
-        return "do some magic!"
+            body = Revenue.from_dict(
+                connexion.request.get_json()
+            )  # noqa: E501
+        return 'do some magic!'
 
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401
 
 
 def api_vversion_revenues_revenue_iddelete(version, revenue_id):  # noqa: E501
@@ -56,21 +59,23 @@ def api_vversion_revenues_revenue_iddelete(version, revenue_id):  # noqa: E501
 
     :rtype: None
     """
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
-        return "do some magic!"
+    if check['test_key'] == 'ok':
+        return 'do some magic!'
 
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401
 
 
-def api_vversion_revenues_revenue_idput(version, revenue_id, body=None):  # noqa: E501
+def api_vversion_revenues_revenue_idput(
+    version, revenue_id, body=None
+):  # noqa: E501
     """api_vversion_revenues_revenue_idput
 
      # noqa: E501
@@ -84,17 +89,19 @@ def api_vversion_revenues_revenue_idput(version, revenue_id, body=None):  # noqa
 
     :rtype: None
     """
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
+    if check['test_key'] == 'ok':
         if connexion.request.is_json:
-            body = Revenue.from_dict(connexion.request.get_json())  # noqa: E501
-        return "do some magic!"
+            body = Revenue.from_dict(
+                connexion.request.get_json()
+            )  # noqa: E501
+        return 'do some magic!'
 
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401

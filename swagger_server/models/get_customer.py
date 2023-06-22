@@ -22,13 +22,13 @@ class GetCustomer(Model):
         :param customer: The customer of this GetCustomer.  # noqa: E501
         :type customer: Customer
         """
-        self.swagger_types = {"customer": Customer}
+        self.swagger_types = {'customer': Customer}
 
-        self.attribute_map = {"customer": "customer"}
+        self.attribute_map = {'customer': 'customer'}
         self._customer = customer
 
     @classmethod
-    def from_dict(cls, dikt) -> "GetCustomer":
+    def from_dict(cls, dikt) -> 'GetCustomer':
         """Returns the dict as a model
 
         :param dikt: A dict.

@@ -15,7 +15,9 @@ class Category(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, name: str = None, description: str = None):  # noqa: E501
+    def __init__(
+        self, name: str = None, description: str = None
+    ):  # noqa: E501
         """Category - a model defined in Swagger
 
         :param name: The name of this Category.  # noqa: E501
@@ -23,14 +25,14 @@ class Category(Model):
         :param description: The description of this Category.  # noqa: E501
         :type description: str
         """
-        self.swagger_types = {"name": str, "description": str}
+        self.swagger_types = {'name': str, 'description': str}
 
-        self.attribute_map = {"name": "name", "description": "description"}
+        self.attribute_map = {'name': 'name', 'description': 'description'}
         self._name = name
         self._description = description
 
     @classmethod
-    def from_dict(cls, dikt) -> "Category":
+    def from_dict(cls, dikt) -> 'Category':
         """Returns the dict as a model
 
         :param dikt: A dict.

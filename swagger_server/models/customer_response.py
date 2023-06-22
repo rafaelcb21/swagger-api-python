@@ -21,13 +21,13 @@ class CustomerResponse(Model):
         :param customer_id: The customer_id of this CustomerResponse.  # noqa: E501
         :type customer_id: int
         """
-        self.swagger_types = {"customer_id": int}
+        self.swagger_types = {'customer_id': int}
 
-        self.attribute_map = {"customer_id": "customer_id"}
+        self.attribute_map = {'customer_id': 'customer_id'}
         self._customer_id = customer_id
 
     @classmethod
-    def from_dict(cls, dikt) -> "CustomerResponse":
+    def from_dict(cls, dikt) -> 'CustomerResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

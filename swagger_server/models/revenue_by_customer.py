@@ -6,7 +6,9 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.customer_revenue import CustomerRevenue  # noqa: F401,E501
+from swagger_server.models.customer_revenue import (
+    CustomerRevenue,
+)  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -17,7 +19,9 @@ class RevenueByCustomer(Model):
     """
 
     def __init__(
-        self, max_revenue_amount: float = None, revenue: List[CustomerRevenue] = None
+        self,
+        max_revenue_amount: float = None,
+        revenue: List[CustomerRevenue] = None,
     ):  # noqa: E501
         """RevenueByCustomer - a model defined in Swagger
 
@@ -27,19 +31,19 @@ class RevenueByCustomer(Model):
         :type revenue: List[CustomerRevenue]
         """
         self.swagger_types = {
-            "max_revenue_amount": float,
-            "revenue": List[CustomerRevenue],
+            'max_revenue_amount': float,
+            'revenue': List[CustomerRevenue],
         }
 
         self.attribute_map = {
-            "max_revenue_amount": "max_revenue_amount",
-            "revenue": "revenue",
+            'max_revenue_amount': 'max_revenue_amount',
+            'revenue': 'revenue',
         }
         self._max_revenue_amount = max_revenue_amount
         self._revenue = revenue
 
     @classmethod
-    def from_dict(cls, dikt) -> "RevenueByCustomer":
+    def from_dict(cls, dikt) -> 'RevenueByCustomer':
         """Returns the dict as a model
 
         :param dikt: A dict.

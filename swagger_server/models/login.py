@@ -23,14 +23,14 @@ class Login(Model):
         :param password: The password of this Login.  # noqa: E501
         :type password: str
         """
-        self.swagger_types = {"login": str, "password": str}
+        self.swagger_types = {'login': str, 'password': str}
 
-        self.attribute_map = {"login": "login", "password": "password"}
+        self.attribute_map = {'login': 'login', 'password': 'password'}
         self._login = login
         self._password = password
 
     @classmethod
-    def from_dict(cls, dikt) -> "Login":
+    def from_dict(cls, dikt) -> 'Login':
         """Returns the dict as a model
 
         :param dikt: A dict.

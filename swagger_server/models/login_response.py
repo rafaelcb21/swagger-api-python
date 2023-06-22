@@ -24,14 +24,14 @@ class LoginResponse(Model):
         :param user: The user of this LoginResponse.  # noqa: E501
         :type user: User
         """
-        self.swagger_types = {"token": str, "user": User}
+        self.swagger_types = {'token': str, 'user': User}
 
-        self.attribute_map = {"token": "token", "user": "user"}
+        self.attribute_map = {'token': 'token', 'user': 'user'}
         self._token = token
         self._user = user
 
     @classmethod
-    def from_dict(cls, dikt) -> "LoginResponse":
+    def from_dict(cls, dikt) -> 'LoginResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

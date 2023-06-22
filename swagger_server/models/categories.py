@@ -26,14 +26,14 @@ class Categories(Model):
         :param categories: The categories of this Categories.  # noqa: E501
         :type categories: List[Category]
         """
-        self.swagger_types = {"count": int, "categories": List[Category]}
+        self.swagger_types = {'count': int, 'categories': List[Category]}
 
-        self.attribute_map = {"count": "count", "categories": "categories"}
+        self.attribute_map = {'count': 'count', 'categories': 'categories'}
         self._count = count
         self._categories = categories
 
     @classmethod
-    def from_dict(cls, dikt) -> "Categories":
+    def from_dict(cls, dikt) -> 'Categories':
         """Returns the dict as a model
 
         :param dikt: A dict.

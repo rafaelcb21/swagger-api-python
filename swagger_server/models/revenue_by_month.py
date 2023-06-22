@@ -17,7 +17,9 @@ class RevenueByMonth(Model):
     """
 
     def __init__(
-        self, max_revenue_amount: float = None, revenue: List[MonthRevenue] = None
+        self,
+        max_revenue_amount: float = None,
+        revenue: List[MonthRevenue] = None,
     ):  # noqa: E501
         """RevenueByMonth - a model defined in Swagger
 
@@ -27,19 +29,19 @@ class RevenueByMonth(Model):
         :type revenue: List[MonthRevenue]
         """
         self.swagger_types = {
-            "max_revenue_amount": float,
-            "revenue": List[MonthRevenue],
+            'max_revenue_amount': float,
+            'revenue': List[MonthRevenue],
         }
 
         self.attribute_map = {
-            "max_revenue_amount": "max_revenue_amount",
-            "revenue": "revenue",
+            'max_revenue_amount': 'max_revenue_amount',
+            'revenue': 'revenue',
         }
         self._max_revenue_amount = max_revenue_amount
         self._revenue = revenue
 
     @classmethod
-    def from_dict(cls, dikt) -> "RevenueByMonth":
+    def from_dict(cls, dikt) -> 'RevenueByMonth':
         """Returns the dict as a model
 
         :param dikt: A dict.

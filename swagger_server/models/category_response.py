@@ -21,13 +21,13 @@ class CategoryResponse(Model):
         :param category_id: The category_id of this CategoryResponse.  # noqa: E501
         :type category_id: int
         """
-        self.swagger_types = {"category_id": int}
+        self.swagger_types = {'category_id': int}
 
-        self.attribute_map = {"category_id": "category_id"}
+        self.attribute_map = {'category_id': 'category_id'}
         self._category_id = category_id
 
     @classmethod
-    def from_dict(cls, dikt) -> "CategoryResponse":
+    def from_dict(cls, dikt) -> 'CategoryResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

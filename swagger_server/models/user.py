@@ -40,21 +40,21 @@ class User(Model):
         :type phone_number: str
         """
         self.swagger_types = {
-            "name": str,
-            "email": str,
-            "password": str,
-            "cnpj": str,
-            "company_name": str,
-            "phone_number": str,
+            'name': str,
+            'email': str,
+            'password': str,
+            'cnpj': str,
+            'company_name': str,
+            'phone_number': str,
         }
 
         self.attribute_map = {
-            "name": "name",
-            "email": "email",
-            "password": "password",
-            "cnpj": "cnpj",
-            "company_name": "company_name",
-            "phone_number": "phone_number",
+            'name': 'name',
+            'email': 'email',
+            'password': 'password',
+            'cnpj': 'cnpj',
+            'company_name': 'company_name',
+            'phone_number': 'phone_number',
         }
         self._name = name
         self._email = email
@@ -64,7 +64,7 @@ class User(Model):
         self._phone_number = phone_number
 
     @classmethod
-    def from_dict(cls, dikt) -> "User":
+    def from_dict(cls, dikt) -> 'User':
         """Returns the dict as a model
 
         :param dikt: A dict.

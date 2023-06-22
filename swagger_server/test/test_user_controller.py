@@ -18,35 +18,45 @@ class TestUserController(BaseTestCase):
     def test_api_vversion_users_idget(self):
         """Test case for api_vversion_users_idget"""
         response = self.client.open(
-            "/api/v{version}/users/{ID}".format(version="version_example", id=56),
-            method="GET",
+            '/api/v{version}/users/{ID}'.format(
+                version='version_example', id=56
+            ),
+            method='GET',
         )
-        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
+        self.assert200(
+            response, 'Response body is : ' + response.data.decode('utf-8')
+        )
 
     def test_api_vversion_users_idput(self):
         """Test case for api_vversion_users_idput"""
         body = User()
         response = self.client.open(
-            "/api/v{version}/users/{ID}".format(version="version_example", id=56),
-            method="PUT",
+            '/api/v{version}/users/{ID}'.format(
+                version='version_example', id=56
+            ),
+            method='PUT',
             data=json.dumps(body),
-            content_type="application/json",
+            content_type='application/json',
         )
-        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
+        self.assert200(
+            response, 'Response body is : ' + response.data.decode('utf-8')
+        )
 
     def test_api_vversion_users_post(self):
         """Test case for api_vversion_users_post"""
         body = User()
         response = self.client.open(
-            "/api/v{version}/users".format(version="version_example"),
-            method="POST",
+            '/api/v{version}/users'.format(version='version_example'),
+            method='POST',
             data=json.dumps(body),
-            content_type="application/json",
+            content_type='application/json',
         )
-        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
+        self.assert200(
+            response, 'Response body is : ' + response.data.decode('utf-8')
+        )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import unittest
 
     unittest.main()

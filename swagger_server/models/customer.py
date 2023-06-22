@@ -16,7 +16,10 @@ class Customer(Model):
     """
 
     def __init__(
-        self, cnpj: str = None, commercial_name: str = None, legal_name: str = None
+        self,
+        cnpj: str = None,
+        commercial_name: str = None,
+        legal_name: str = None,
     ):  # noqa: E501
         """Customer - a model defined in Swagger
 
@@ -27,19 +30,23 @@ class Customer(Model):
         :param legal_name: The legal_name of this Customer.  # noqa: E501
         :type legal_name: str
         """
-        self.swagger_types = {"cnpj": str, "commercial_name": str, "legal_name": str}
+        self.swagger_types = {
+            'cnpj': str,
+            'commercial_name': str,
+            'legal_name': str,
+        }
 
         self.attribute_map = {
-            "cnpj": "cnpj",
-            "commercial_name": "commercial_name",
-            "legal_name": "legal_name",
+            'cnpj': 'cnpj',
+            'commercial_name': 'commercial_name',
+            'legal_name': 'legal_name',
         }
         self._cnpj = cnpj
         self._commercial_name = commercial_name
         self._legal_name = legal_name
 
     @classmethod
-    def from_dict(cls, dikt) -> "Customer":
+    def from_dict(cls, dikt) -> 'Customer':
         """Returns the dict as a model
 
         :param dikt: A dict.

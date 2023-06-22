@@ -31,22 +31,22 @@ class Setting(Model):
         :type email_notification: bool
         """
         self.swagger_types = {
-            "max_revenue_amount": float,
-            "sms_notification": bool,
-            "email_notification": bool,
+            'max_revenue_amount': float,
+            'sms_notification': bool,
+            'email_notification': bool,
         }
 
         self.attribute_map = {
-            "max_revenue_amount": "max_revenue_amount",
-            "sms_notification": "sms_notification",
-            "email_notification": "email_notification",
+            'max_revenue_amount': 'max_revenue_amount',
+            'sms_notification': 'sms_notification',
+            'email_notification': 'email_notification',
         }
         self._max_revenue_amount = max_revenue_amount
         self._sms_notification = sms_notification
         self._email_notification = email_notification
 
     @classmethod
-    def from_dict(cls, dikt) -> "Setting":
+    def from_dict(cls, dikt) -> 'Setting':
         """Returns the dict as a model
 
         :param dikt: A dict.

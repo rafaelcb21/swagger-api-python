@@ -21,13 +21,13 @@ class UserResponse(Model):
         :param user_id: The user_id of this UserResponse.  # noqa: E501
         :type user_id: int
         """
-        self.swagger_types = {"user_id": int}
+        self.swagger_types = {'user_id': int}
 
-        self.attribute_map = {"user_id": "user_id"}
+        self.attribute_map = {'user_id': 'user_id'}
         self._user_id = user_id
 
     @classmethod
-    def from_dict(cls, dikt) -> "UserResponse":
+    def from_dict(cls, dikt) -> 'UserResponse':
         """Returns the dict as a model
 
         :param dikt: A dict.

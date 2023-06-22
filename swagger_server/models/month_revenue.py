@@ -25,17 +25,17 @@ class MonthRevenue(Model):
         :param month_revenue: The month_revenue of this MonthRevenue.  # noqa: E501
         :type month_revenue: float
         """
-        self.swagger_types = {"month_name": str, "month_revenue": float}
+        self.swagger_types = {'month_name': str, 'month_revenue': float}
 
         self.attribute_map = {
-            "month_name": "month_name",
-            "month_revenue": "month_revenue",
+            'month_name': 'month_name',
+            'month_revenue': 'month_revenue',
         }
         self._month_name = month_name
         self._month_revenue = month_revenue
 
     @classmethod
-    def from_dict(cls, dikt) -> "MonthRevenue":
+    def from_dict(cls, dikt) -> 'MonthRevenue':
         """Returns the dict as a model
 
         :param dikt: A dict.

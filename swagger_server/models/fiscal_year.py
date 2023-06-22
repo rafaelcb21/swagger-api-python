@@ -21,13 +21,13 @@ class FiscalYear(Model):
         :param fiscal_year: The fiscal_year of this FiscalYear.  # noqa: E501
         :type fiscal_year: int
         """
-        self.swagger_types = {"fiscal_year": int}
+        self.swagger_types = {'fiscal_year': int}
 
-        self.attribute_map = {"fiscal_year": "fiscal_year"}
+        self.attribute_map = {'fiscal_year': 'fiscal_year'}
         self._fiscal_year = fiscal_year
 
     @classmethod
-    def from_dict(cls, dikt) -> "FiscalYear":
+    def from_dict(cls, dikt) -> 'FiscalYear':
         """Returns the dict as a model
 
         :param dikt: A dict.

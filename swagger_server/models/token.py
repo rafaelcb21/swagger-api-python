@@ -23,14 +23,14 @@ class Token(Model):
         :param app_token: The app_token of this Token.  # noqa: E501
         :type app_token: str
         """
-        self.swagger_types = {"login": str, "app_token": str}
+        self.swagger_types = {'login': str, 'app_token': str}
 
-        self.attribute_map = {"login": "login", "app_token": "app_token"}
+        self.attribute_map = {'login': 'login', 'app_token': 'app_token'}
         self._login = login
         self._app_token = app_token
 
     @classmethod
-    def from_dict(cls, dikt) -> "Token":
+    def from_dict(cls, dikt) -> 'Token':
         """Returns the dict as a model
 
         :param dikt: A dict.

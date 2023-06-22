@@ -25,17 +25,20 @@ class TotalRevenue(Model):
         :param max_revenue_amount: The max_revenue_amount of this TotalRevenue.  # noqa: E501
         :type max_revenue_amount: float
         """
-        self.swagger_types = {"total_revenue": float, "max_revenue_amount": float}
+        self.swagger_types = {
+            'total_revenue': float,
+            'max_revenue_amount': float,
+        }
 
         self.attribute_map = {
-            "total_revenue": "total_revenue",
-            "max_revenue_amount": "max_revenue_amount",
+            'total_revenue': 'total_revenue',
+            'max_revenue_amount': 'max_revenue_amount',
         }
         self._total_revenue = total_revenue
         self._max_revenue_amount = max_revenue_amount
 
     @classmethod
-    def from_dict(cls, dikt) -> "TotalRevenue":
+    def from_dict(cls, dikt) -> 'TotalRevenue':
         """Returns the dict as a model
 
         :param dikt: A dict.

@@ -19,26 +19,30 @@ class TestAuthenticationController(BaseTestCase):
         """Test case for api_vversion_auth_post"""
         body = Login()
         response = self.client.open(
-            "/api/v{version}/auth".format(version="version_example"),
-            method="POST",
+            '/api/v{version}/auth'.format(version='version_example'),
+            method='POST',
             data=json.dumps(body),
-            content_type="application/json",
+            content_type='application/json',
         )
-        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
+        self.assert200(
+            response, 'Response body is : ' + response.data.decode('utf-8')
+        )
 
     def test_api_vversion_users_sso_post(self):
         """Test case for api_vversion_users_sso_post"""
         body = Token()
         response = self.client.open(
-            "/api/v{version}/users/sso".format(version="version_example"),
-            method="POST",
+            '/api/v{version}/users/sso'.format(version='version_example'),
+            method='POST',
             data=json.dumps(body),
-            content_type="application/json",
+            content_type='application/json',
         )
-        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
+        self.assert200(
+            response, 'Response body is : ' + response.data.decode('utf-8')
+        )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import unittest
 
     unittest.main()

@@ -15,7 +15,9 @@ class CustomerRevenue(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, customer_name: str = None, revenue: float = None):  # noqa: E501
+    def __init__(
+        self, customer_name: str = None, revenue: float = None
+    ):  # noqa: E501
         """CustomerRevenue - a model defined in Swagger
 
         :param customer_name: The customer_name of this CustomerRevenue.  # noqa: E501
@@ -23,14 +25,17 @@ class CustomerRevenue(Model):
         :param revenue: The revenue of this CustomerRevenue.  # noqa: E501
         :type revenue: float
         """
-        self.swagger_types = {"customer_name": str, "revenue": float}
+        self.swagger_types = {'customer_name': str, 'revenue': float}
 
-        self.attribute_map = {"customer_name": "customer_name", "revenue": "revenue"}
+        self.attribute_map = {
+            'customer_name': 'customer_name',
+            'revenue': 'revenue',
+        }
         self._customer_name = customer_name
         self._revenue = revenue
 
     @classmethod
-    def from_dict(cls, dikt) -> "CustomerRevenue":
+    def from_dict(cls, dikt) -> 'CustomerRevenue':
         """Returns the dict as a model
 
         :param dikt: A dict.

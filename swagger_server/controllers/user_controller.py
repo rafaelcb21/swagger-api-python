@@ -1,5 +1,4 @@
 import connexion
-import six
 
 from swagger_server.models.error import Error  # noqa: E501
 from swagger_server.models.get_user import GetUser  # noqa: E501
@@ -27,14 +26,14 @@ def api_vversion_users_idget(version, id_):  # noqa: E501
     :rtype: GetUser
     """
 
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
+    if check['test_key'] == 'ok':
         session = db.Session()
         user_data = session.query(db.User).filter(db.User.id == id_).all()
 
@@ -51,11 +50,11 @@ def api_vversion_users_idget(version, id_):  # noqa: E501
                     )
                 )
             session.close()
-            return response, 201
-        return Error(error="Not Found"), 404
+            return response, 200
+        return Error(error='Not Found'), 404
 
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401
 
 
 def api_vversion_users_idput(version, id_, body=None):  # noqa: E501
@@ -73,19 +72,21 @@ def api_vversion_users_idput(version, id_, body=None):  # noqa: E501
     :rtype: None
     """
 
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
+    if check['test_key'] == 'ok':
         if connexion.request.is_json:
             body = User.from_dict(connexion.request.get_json())  # noqa: E501
 
             session = db.Session()
-            user_data = session.query(db.User).filter(db.User.id == id_).first()
+            user_data = (
+                session.query(db.User).filter(db.User.id == id_).first()
+            )
 
             user_data.cnpj = body.cnpj
             user_data.company_name = body.company_name
@@ -97,7 +98,7 @@ def api_vversion_users_idput(version, id_, body=None):  # noqa: E501
             session.commit()
             session.close()
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401
 
 
 def api_vversion_users_post(version, body=None):  # noqa: E501
@@ -112,14 +113,14 @@ def api_vversion_users_post(version, body=None):  # noqa: E501
 
     :rtype: UserResponse
     """
-    if check_version(version)["version"] == "error":
-        return Error(error="Unauthorized"), 401
+    if check_version(version)['version'] == 'error':
+        return Error(error='Unauthorized'), 401
 
-    auth_header = connexion.request.headers.get("Authorization")
-    token = auth_header.split(" ")[1]
+    auth_header = connexion.request.headers.get('Authorization')
+    token = auth_header.split(' ')[1]
     check = check_user_auth(token)
 
-    if check["test_key"] == "ok":
+    if check['test_key'] == 'ok':
         if connexion.request.is_json:
             body = User.from_dict(connexion.request.get_json())  # noqa: E501
 
@@ -151,8 +152,8 @@ def api_vversion_users_post(version, body=None):  # noqa: E501
                 for item in user_data:
                     response = UserResponse(user_id=item.id)
                 session.close()
-                return response
+                return response, 201
             else:
-                return Error(error="Unauthorized"), 401
+                return Error(error='Unauthorized'), 401
     else:
-        return Error(error="Unauthorized"), 401
+        return Error(error='Unauthorized'), 401

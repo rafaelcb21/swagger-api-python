@@ -22,13 +22,13 @@ class GetUser(Model):
         :param user: The user of this GetUser.  # noqa: E501
         :type user: User
         """
-        self.swagger_types = {"user": User}
+        self.swagger_types = {'user': User}
 
-        self.attribute_map = {"user": "user"}
+        self.attribute_map = {'user': 'user'}
         self._user = user
 
     @classmethod
-    def from_dict(cls, dikt) -> "GetUser":
+    def from_dict(cls, dikt) -> 'GetUser':
         """Returns the dict as a model
 
         :param dikt: A dict.
