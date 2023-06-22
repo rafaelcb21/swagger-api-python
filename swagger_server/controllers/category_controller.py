@@ -39,7 +39,7 @@ def api_vversion_categories_category_id_archives_put(
     if check['test_key'] == 'ok':
         session = db.Session()
         user_data = (
-            session.query(db.Category).filter(db.Category.id == category_id).first()
+            session.query(db.Category).get(category_id)
         )
 
         if user_data == None:
@@ -75,7 +75,7 @@ def api_vversion_categories_category_idget(version, category_id):  # noqa: E501
 
     if check['test_key'] == 'ok':
         session = db.Session()
-        user_data = session.query(db.Category).filter(db.Category.id == category_id).first()
+        user_data = session.query(db.Category).get(category_id)
 
         if user_data == None:
             return Error(error='Not Found'), 404
@@ -124,7 +124,7 @@ def api_vversion_categories_category_idput(
 
             session = db.Session()
             user_data = (
-                session.query(db.Category).filter(db.Category.id == category_id).first()
+                session.query(db.Category).get(category_id)
             )
 
             if user_data == None:
@@ -219,16 +219,8 @@ def api_vversion_categories_post(version, body=None):  # noqa: E501
             session.add(register)
             session.commit()
 
-            user_data = (
-                session.query(db.Category)
-                .filter(
-                    db.Category.name == body.name,
-                    db.Category.description == body.description
-                )
-                .first()
-            )
-
-            response = CategoryResponse(category_id=user_data.id)
+            response = CategoryResponse(category_id=register.id)
+            session.close()
 
             return response, 201
 

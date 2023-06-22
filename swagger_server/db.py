@@ -112,18 +112,18 @@ class Expense(Base):
     amount = Column('amount', Float, nullable=False)
     description = Column('description', String(100), nullable=False)
     transaction_date = Column('transaction_date', Date, nullable=True)
-    customer_id = Column('customer_id', Integer, ForeignKey('Customer.id'), nullable=False)
+    customer_id = Column('customer_id', Integer, ForeignKey('Customer.id'), default=None, nullable=True)
     category_id = Column('category_id', Integer, ForeignKey('Category.id'), nullable=False)
 
     Customer = relationship('Customer')
     Category = relationship('Category')
 
     def __init__(
-        self, accrual_date, amount, description, transaction_date, customer_id, category_id
+        self, accrual_date, amount, description, transaction_date, category_id, customer_id
     ):
         self.accrual_date = accrual_date
         self.amount = amount
         self.description = description
         self.transaction_date = transaction_date
-        self.customer_id = customer_id
         self.category_id = category_id
+        self.customer_id = customer_id

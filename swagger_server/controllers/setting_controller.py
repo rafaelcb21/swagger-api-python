@@ -43,6 +43,8 @@ def api_vversion_settings_get(version):  # noqa: E501
             sms_notification=user_data.sms_notification
         )
 
+        session.close()
+        
         return response, 200
     return Error(error='Unauthorized'), 401
 

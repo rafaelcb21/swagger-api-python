@@ -41,7 +41,7 @@ def api_vversion_customers_customer_id_archives_put(
     if check['test_key'] == 'ok':
         session = db.Session()
         user_data = (
-            session.query(db.Customer).filter(db.Customer.id == customer_id).first()
+            session.query(db.Customer).get(customer_id)
         )
 
         if user_data == None:
@@ -77,7 +77,7 @@ def api_vversion_customers_customer_idget(version, customer_id):  # noqa: E501
 
     if check['test_key'] == 'ok':
         session = db.Session()
-        user_data = session.query(db.Customer).filter(db.Customer.id == customer_id).first()
+        user_data = session.query(db.Customer).get(customer_id)
 
         if user_data == None:
             return Error(error='Not Found'), 404
@@ -124,7 +124,7 @@ def api_vversion_customers_customer_idput(version, customer_id, body=None):  # n
 
             session = db.Session()
             user_data = (
-                session.query(db.Customer).filter(db.Customer.id == customer_id).first()
+                session.query(db.Customer).get(customer_id)
             )
 
             if user_data == None:
@@ -228,17 +228,8 @@ def api_vversion_customers_post(version, body=None):  # noqa: E501
             session.add(register)
             session.commit()
 
-            user_data = (
-                session.query(db.Customer)
-                .filter(
-                    db.Customer.cnpj == body.cnpj,
-                    db.Customer.commercial_name == body.commercial_name,
-                    db.Customer.legal_name == body.legal_name
-                )
-                .first()
-            )
-
-            response = CustomerResponse(customer_id=user_data.id)
+            response = CustomerResponse(customer_id=register.id)
+            session.close()
 
             return response, 201
 

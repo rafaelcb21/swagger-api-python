@@ -243,6 +243,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
       - user_auth: []
       x-openapi-router-controller: swagger_server.controllers.revenue_controller
@@ -684,6 +690,12 @@ paths:
                 $ref: '#/components/schemas/ExpenseResponse'
         "401":
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Not Found
           content:
             application/json:
               schema:

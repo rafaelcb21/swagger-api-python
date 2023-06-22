@@ -35,7 +35,7 @@ def api_vversion_users_idget(version, id_):  # noqa: E501
 
     if check['test_key'] == 'ok':
         session = db.Session()
-        user_data = session.query(db.User).filter(db.User.id == id_).first()
+        user_data = session.query(db.User).get(id_)
         
         if user_data == None:
             return Error(error='Not Found'), 404
@@ -88,7 +88,7 @@ def api_vversion_users_idput(version, id_, body=None):  # noqa: E501
 
             session = db.Session()
             user_data = (
-                session.query(db.User).filter(db.User.id == id_).first()
+                session.query(db.User).get(id_)
             )
 
             if user_data == None:
@@ -142,20 +142,9 @@ def api_vversion_users_post(version, body=None):  # noqa: E501
             session.add(register)
             session.commit()
 
-            user_data = (
-                session.query(db.User)
-                .filter(
-                    db.User.cnpj == body.cnpj,
-                    db.User.company_name == body.company_name,
-                    db.User.email == body.email,
-                    db.User.name == body.name,
-                    db.User.password == body.password,
-                    db.User.phone_number == body.phone_number,
-                )
-                .first()
-            )
+            response = UserResponse(user_id=register.id)
 
-            response = UserResponse(user_id=user_data.id)
+            session.close()
 
             return response, 201
 
