@@ -1,5 +1,4 @@
 import connexion
-import six
 
 from swagger_server.models.customer import Customer  # noqa: E501
 from swagger_server.models.customer_response import (
@@ -9,7 +8,6 @@ from swagger_server.models.error import Error  # noqa: E501
 from swagger_server.models.get_customer import GetCustomer  # noqa: E501
 from swagger_server.models.get_customers import GetCustomers  # noqa: E501
 from swagger_server import db
-from swagger_server.models.error import Error
 from swagger_server.controllers.authorization_controller import (
     check_user_auth,
     check_version,
@@ -30,7 +28,7 @@ def api_vversion_customers_customer_id_archives_put(
 
     :rtype: None
     """
-    
+
     if check_version(version)['version'] == 'error':
         return Error(error='Unauthorized'), 401
 
@@ -40,11 +38,9 @@ def api_vversion_customers_customer_id_archives_put(
 
     if check['test_key'] == 'ok':
         session = db.Session()
-        user_data = (
-            session.query(db.Customer).get(customer_id)
-        )
+        user_data = session.query(db.Customer).get(customer_id)
 
-        if user_data == None:
+        if user_data is None:
             return Error(error='Not Found'), 404
 
         user_data.archive = True
@@ -79,14 +75,14 @@ def api_vversion_customers_customer_idget(version, customer_id):  # noqa: E501
         session = db.Session()
         user_data = session.query(db.Customer).get(customer_id)
 
-        if user_data == None:
+        if user_data is None:
             return Error(error='Not Found'), 404
-        
+
         response = GetCustomer(
             customer=Customer(
                 cnpj=user_data.cnpj,
                 commercial_name=user_data.commercial_name,
-                legal_name=user_data.legal_name
+                legal_name=user_data.legal_name,
             )
         )
 
@@ -98,7 +94,9 @@ def api_vversion_customers_customer_idget(version, customer_id):  # noqa: E501
         return Error(error='Unauthorized'), 401
 
 
-def api_vversion_customers_customer_idput(version, customer_id, body=None):  # noqa: E501
+def api_vversion_customers_customer_idput(
+    version, customer_id, body=None
+):  # noqa: E501
     """api_vversion_customers_customer_idput
 
      # noqa: E501
@@ -120,16 +118,16 @@ def api_vversion_customers_customer_idput(version, customer_id, body=None):  # n
 
     if check['test_key'] == 'ok':
         if connexion.request.is_json:
-            body = Customer.from_dict(connexion.request.get_json())  # noqa: E501
+            body = Customer.from_dict(
+                connexion.request.get_json()
+            )  # noqa: E501
 
             session = db.Session()
-            user_data = (
-                session.query(db.Customer).get(customer_id)
-            )
+            user_data = session.query(db.Customer).get(customer_id)
 
-            if user_data == None:
+            if user_data is None:
                 return Error(error='Not Found'), 404
-            
+
             user_data.cnpj = body.cnpj
             user_data.commercial_name = body.commercial_name
             user_data.legal_name = body.legal_name
@@ -168,12 +166,27 @@ def api_vversion_customers_get(version, name=None, cnpj=None):  # noqa: E501
         if name is None and cnpj is None:
             user_data = session.query(db.Customer).all()
         elif name is None and cnpj is not None:
-            user_data = session.query(db.Customer).filter(db.Customer.cnpj == cnpj).all()
+            user_data = (
+                session.query(db.Customer)
+                .filter(db.Customer.cnpj == cnpj)
+                .all()
+            )
         elif name is not None and cnpj is None:
-            user_data = session.query(db.Customer).filter(db.Customer.commercial_name == name).all()
+            user_data = (
+                session.query(db.Customer)
+                .filter(db.Customer.commercial_name == name)
+                .all()
+            )
         elif name is not None and cnpj is not None:
-            user_data = session.query(db.Customer).filter(db.Customer.commercial_name == name, db.Customer.cnpj == cnpj).all()
-        
+            user_data = (
+                session.query(db.Customer)
+                .filter(
+                    db.Customer.commercial_name == name,
+                    db.Customer.cnpj == cnpj,
+                )
+                .all()
+            )
+
         if len(user_data) == 0:
             return Error(error='Not Found'), 404
 
@@ -181,11 +194,15 @@ def api_vversion_customers_get(version, name=None, cnpj=None):  # noqa: E501
             customers = list()
 
             for i in user_data:
-                customers.append(Customer(cnpj=i.cnpj, commercial_name=i.commercial_name, legal_name=i.legal_name))
+                customers.append(
+                    Customer(
+                        cnpj=i.cnpj,
+                        commercial_name=i.commercial_name,
+                        legal_name=i.legal_name,
+                    )
+                )
 
-            response = GetCustomers(
-                count=len(customers),
-                customers=customers)
+            response = GetCustomers(count=len(customers), customers=customers)
             session.close()
 
             return response, 201
@@ -223,7 +240,7 @@ def api_vversion_customers_post(version, body=None):  # noqa: E501
             register = db.Customer(
                 cnpj=body.cnpj,
                 commercial_name=body.commercial_name,
-                legal_name=body.legal_name
+                legal_name=body.legal_name,
             )
             session.add(register)
             session.commit()

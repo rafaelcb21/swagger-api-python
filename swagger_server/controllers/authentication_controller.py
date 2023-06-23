@@ -1,5 +1,4 @@
 import connexion
-import six
 
 from swagger_server.models.error import Error  # noqa: E501
 from swagger_server.models.login import Login  # noqa: E501
@@ -7,7 +6,6 @@ from swagger_server.models.login_response import LoginResponse  # noqa: E501
 from swagger_server.models.user import User
 from swagger_server.models.token import Token  # noqa: E501
 from swagger_server import db
-from swagger_server.models.error import Error
 from swagger_server.controllers.authorization_controller import check_version
 
 import os

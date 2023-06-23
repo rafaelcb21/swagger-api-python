@@ -3,13 +3,11 @@ import connexion
 from swagger_server.models.error import Error  # noqa: E501
 from swagger_server.models.get_user import GetUser  # noqa: E501
 from swagger_server.models.user import User  # noqa: E501
-from swagger_server.models.get_user import GetUser  # noqa: E501
 from swagger_server import db
 from swagger_server.controllers.authorization_controller import (
     check_user_auth,
     check_version,
 )
-from swagger_server.models.error import Error
 from swagger_server.models.user_response import UserResponse
 
 
@@ -36,8 +34,8 @@ def api_vversion_users_idget(version, id_):  # noqa: E501
     if check['test_key'] == 'ok':
         session = db.Session()
         user_data = session.query(db.User).get(id_)
-        
-        if user_data == None:
+
+        if user_data is None:
             return Error(error='Not Found'), 404
 
         response = GetUser(
@@ -54,7 +52,6 @@ def api_vversion_users_idget(version, id_):  # noqa: E501
         session.close()
 
         return response, 200
-
 
     else:
         return Error(error='Unauthorized'), 401
@@ -87,11 +84,9 @@ def api_vversion_users_idput(version, id_, body=None):  # noqa: E501
             body = User.from_dict(connexion.request.get_json())  # noqa: E501
 
             session = db.Session()
-            user_data = (
-                session.query(db.User).get(id_)
-            )
+            user_data = session.query(db.User).get(id_)
 
-            if user_data == None:
+            if user_data is None:
                 return Error(error='Not Found'), 404
 
             user_data.cnpj = body.cnpj

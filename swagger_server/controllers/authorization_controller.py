@@ -1,9 +1,7 @@
-from typing import List
 from pathlib import Path
 import jwt
 import os
 from dotenv import load_dotenv
-from swagger_server.models.error import Error  # noqa: E501
 
 
 env_path = Path(__file__).resolve().parent.parent.parent / '.env'

@@ -1,5 +1,4 @@
 import connexion
-import six
 
 from swagger_server.models.categories import Categories  # noqa: E501
 from swagger_server.models.category import Category  # noqa: E501
@@ -8,7 +7,6 @@ from swagger_server.models.category_response import (
 )  # noqa: E501
 from swagger_server.models.error import Error  # noqa: E501
 from swagger_server import db
-from swagger_server.models.error import Error
 from swagger_server.controllers.authorization_controller import (
     check_user_auth,
     check_version,
@@ -38,11 +36,9 @@ def api_vversion_categories_category_id_archives_put(
 
     if check['test_key'] == 'ok':
         session = db.Session()
-        user_data = (
-            session.query(db.Category).get(category_id)
-        )
+        user_data = session.query(db.Category).get(category_id)
 
-        if user_data == None:
+        if user_data is None:
             return Error(error='Not Found'), 404
 
         user_data.archive = True
@@ -77,12 +73,11 @@ def api_vversion_categories_category_idget(version, category_id):  # noqa: E501
         session = db.Session()
         user_data = session.query(db.Category).get(category_id)
 
-        if user_data == None:
+        if user_data is None:
             return Error(error='Not Found'), 404
 
         response = Category(
-            description=user_data.description,
-            name=user_data.name
+            description=user_data.description, name=user_data.name
         )
 
         session.close()
@@ -123,13 +118,11 @@ def api_vversion_categories_category_idput(
             )  # noqa: E501
 
             session = db.Session()
-            user_data = (
-                session.query(db.Category).get(category_id)
-            )
+            user_data = session.query(db.Category).get(category_id)
 
-            if user_data == None:
+            if user_data is None:
                 return Error(error='Not Found'), 404
-            
+
             user_data.description = body.description
             user_data.name = body.name
 
@@ -165,8 +158,12 @@ def api_vversion_categories_get(version, name=None):  # noqa: E501
         if name is None:
             user_data = session.query(db.Category).all()
         else:
-            user_data = session.query(db.Category).filter(db.Category.name == name).all()
-        
+            user_data = (
+                session.query(db.Category)
+                .filter(db.Category.name == name)
+                .all()
+            )
+
         if len(user_data) == 0:
             return Error(error='Not Found'), 404
 
@@ -174,11 +171,11 @@ def api_vversion_categories_get(version, name=None):  # noqa: E501
             categories = list()
 
             for i in user_data:
-                categories.append(Category(name=i.name, description=i.description))
+                categories.append(
+                    Category(name=i.name, description=i.description)
+                )
 
-            response = Categories(
-                count=len(categories),
-                categories=categories)
+            response = Categories(count=len(categories), categories=categories)
             session.close()
 
             return response, 201
@@ -213,8 +210,7 @@ def api_vversion_categories_post(version, body=None):  # noqa: E501
             )  # noqa: E501
             session = db.Session()
             register = db.Category(
-                name=body.name,
-                description=body.description
+                name=body.name, description=body.description
             )
             session.add(register)
             session.commit()

@@ -7,7 +7,6 @@ from swagger_server.models.expense_response import (
     ExpenseResponse,
 )  # noqa: E501
 from swagger_server import db
-from swagger_server.models.error import Error
 from swagger_server.controllers.authorization_controller import (
     check_user_auth,
     check_version,
@@ -44,28 +43,26 @@ def api_vversion_expenses_category_idpost(
             )  # noqa: E501
 
             session = db.Session()
-            user_data = (
-                session.query(db.Category).get(category_id)
-            )
+            user_data = session.query(db.Category).get(category_id)
 
-            if user_data == None:
+            if user_data is None:
                 return Error(error='Not Found'), 404
 
-            user_data_ = (
-                session.query(db.Customer).get(body.customer_id)
-            )
+            user_data_ = session.query(db.Customer).get(body.customer_id)
 
-            if user_data_ == None:
+            if user_data_ is None:
                 body.customer_id = None
-            
-            date_format = "%Y-%m-%d"
+
+            date_format = '%Y-%m-%d'
             register = db.Expense(
                 accrual_date=datetime.strptime(body.accrual_date, date_format),
                 amount=body.amount,
                 description=body.description,
-                transaction_date=datetime.strptime(body.transaction_date, date_format),
+                transaction_date=datetime.strptime(
+                    body.transaction_date, date_format
+                ),
                 customer_id=body.customer_id,
-                category_id=category_id
+                category_id=category_id,
             )
             session.add(register)
             session.commit()
@@ -75,7 +72,7 @@ def api_vversion_expenses_category_idpost(
             session.close()
 
             return response, 201
-            
+
         return Error(error='Unauthorized'), 401
 
     else:
@@ -104,13 +101,11 @@ def api_vversion_expenses_expense_iddelete(version, expense_id):  # noqa: E501
     if check['test_key'] == 'ok':
         session = db.Session()
 
-        user_data = (
-            session.query(db.Expense).get(expense_id)
-        )
+        user_data = session.query(db.Expense).get(expense_id)
 
-        if user_data == None:
+        if user_data is None:
             return Error(error='Not Found'), 404
-        
+
         session.delete(user_data)
         session.commit()
         session.close()
@@ -150,34 +145,33 @@ def api_vversion_expenses_expense_idput(
 
             session = db.Session()
 
-            user_data = (
-                session.query(db.Expense).get(expense_id)
-            )
+            user_data = session.query(db.Expense).get(expense_id)
 
-            if user_data == None:
+            if user_data is None:
                 return Error(error='Not Found'), 404
 
-            user_data_ = (
-                session.query(db.Customer).get(body.customer_id)
-            )
+            user_data_ = session.query(db.Customer).get(body.customer_id)
 
-            if user_data_ == None:
+            if user_data_ is None:
                 body.customer_id = None
 
-            date_format = "%Y-%m-%d"
+            date_format = '%Y-%m-%d'
 
-            user_data.accrual_date=datetime.strptime(body.accrual_date, date_format)
-            user_data.amount=body.amount
-            user_data.description=body.description
-            user_data.transaction_date=datetime.strptime(body.transaction_date, date_format)
-            user_data.customer_id=body.customer_id
-                
+            user_data.accrual_date = datetime.strptime(
+                body.accrual_date, date_format
+            )
+            user_data.amount = body.amount
+            user_data.description = body.description
+            user_data.transaction_date = datetime.strptime(
+                body.transaction_date, date_format
+            )
+            user_data.customer_id = body.customer_id
+
             session.commit()
             session.close()
-        
+
         else:
             return Error(error='Unauthorized'), 401
 
     else:
         return Error(error='Unauthorized'), 401
-

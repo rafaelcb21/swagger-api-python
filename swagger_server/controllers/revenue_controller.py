@@ -7,7 +7,6 @@ from swagger_server.models.revenue_response import (
     RevenueResponse,
 )  # noqa: E501
 from swagger_server import db
-from swagger_server.models.error import Error
 from swagger_server.controllers.authorization_controller import (
     check_user_auth,
     check_version,
@@ -45,21 +44,21 @@ def api_vversion_revenues_customer_idpost(
 
             session = db.Session()
 
-            user_data = (
-                session.query(db.Customer).get(customer_id)
-            )
+            user_data = session.query(db.Customer).get(customer_id)
 
-            if user_data == None:
+            if user_data is None:
                 return Error(error='Not Found'), 404
 
-            date_format = "%Y-%m-%d"
+            date_format = '%Y-%m-%d'
             register = db.Revenue(
                 accrual_date=datetime.strptime(body.accrual_date, date_format),
                 amount=body.amount,
                 description=body.description,
                 invoice_id=body.invoice_id,
-                transaction_date=datetime.strptime(body.transaction_date, date_format),
-                customer_id=customer_id
+                transaction_date=datetime.strptime(
+                    body.transaction_date, date_format
+                ),
+                customer_id=customer_id,
             )
             session.add(register)
             session.commit()
@@ -98,13 +97,11 @@ def api_vversion_revenues_revenue_iddelete(version, revenue_id):  # noqa: E501
     if check['test_key'] == 'ok':
         session = db.Session()
 
-        user_data = (
-            session.query(db.Revenue).get(revenue_id)
-        )
+        user_data = session.query(db.Revenue).get(revenue_id)
 
-        if user_data == None:
+        if user_data is None:
             return Error(error='Not Found'), 404
-        
+
         session.delete(user_data)
         session.commit()
         session.close()
@@ -143,24 +140,26 @@ def api_vversion_revenues_revenue_idput(
             )  # noqa: E501
             session = db.Session()
 
-            user_data = (
-                session.query(db.Revenue).get(revenue_id)
-            )
+            user_data = session.query(db.Revenue).get(revenue_id)
 
-            if user_data == None:
+            if user_data is None:
                 return Error(error='Not Found'), 404
 
-            date_format = "%Y-%m-%d"
-            
-            user_data.accrual_date=datetime.strptime(body.accrual_date, date_format)
-            user_data.amount=body.amount
-            user_data.description=body.description
-            user_data.invoice_id=body.invoice_id
-            user_data.transaction_date=datetime.strptime(body.transaction_date, date_format)
-                
+            date_format = '%Y-%m-%d'
+
+            user_data.accrual_date = datetime.strptime(
+                body.accrual_date, date_format
+            )
+            user_data.amount = body.amount
+            user_data.description = body.description
+            user_data.invoice_id = body.invoice_id
+            user_data.transaction_date = datetime.strptime(
+                body.transaction_date, date_format
+            )
+
             session.commit()
             session.close()
-        
+
         else:
             return Error(error='Unauthorized'), 401
 

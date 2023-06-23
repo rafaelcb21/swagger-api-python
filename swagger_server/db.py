@@ -1,4 +1,13 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Date, ForeignKey, create_engine
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    Boolean,
+    Float,
+    Date,
+    ForeignKey,
+    create_engine,
+)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 
@@ -52,14 +61,12 @@ class Customer(Base):
     __tablename__ = 'Customer'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    cnpj = Column('cnpj', String(14) , nullable=False)
+    cnpj = Column('cnpj', String(14), nullable=False)
     commercial_name = Column('commercial_name', String(100), nullable=False)
     legal_name = Column('legal_name', String(100), nullable=False)
     archive = Column('archive', Boolean, default=False, nullable=True)
 
-    def __init__(
-        self, cnpj, commercial_name, legal_name
-    ):
+    def __init__(self, cnpj, commercial_name, legal_name):
         self.cnpj = cnpj
         self.commercial_name = commercial_name
         self.legal_name = legal_name
@@ -74,12 +81,20 @@ class Revenue(Base):
     amount = Column('amount', Float, nullable=False)
     description = Column('description', String(100), nullable=False)
     transaction_date = Column('transaction_date', Date, nullable=False)
-    customer_id = Column('customer_id', Integer, ForeignKey('Customer.id'), nullable=False)
+    customer_id = Column(
+        'customer_id', Integer, ForeignKey('Customer.id'), nullable=False
+    )
 
     Customer = relationship('Customer')
 
     def __init__(
-        self, invoice_id, accrual_date, amount, description, transaction_date, customer_id
+        self,
+        invoice_id,
+        accrual_date,
+        amount,
+        description,
+        transaction_date,
+        customer_id,
     ):
         self.invoice_id = invoice_id
         self.accrual_date = accrual_date
@@ -97,9 +112,7 @@ class Category(Base):
     description = Column('description', String(100), nullable=False)
     archive = Column('archive', Boolean, default=False, nullable=True)
 
-    def __init__(
-        self, name, description
-    ):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
 
@@ -112,14 +125,28 @@ class Expense(Base):
     amount = Column('amount', Float, nullable=False)
     description = Column('description', String(100), nullable=False)
     transaction_date = Column('transaction_date', Date, nullable=True)
-    customer_id = Column('customer_id', Integer, ForeignKey('Customer.id'), default=None, nullable=True)
-    category_id = Column('category_id', Integer, ForeignKey('Category.id'), nullable=False)
+    customer_id = Column(
+        'customer_id',
+        Integer,
+        ForeignKey('Customer.id'),
+        default=None,
+        nullable=True,
+    )
+    category_id = Column(
+        'category_id', Integer, ForeignKey('Category.id'), nullable=False
+    )
 
     Customer = relationship('Customer')
     Category = relationship('Category')
 
     def __init__(
-        self, accrual_date, amount, description, transaction_date, category_id, customer_id
+        self,
+        accrual_date,
+        amount,
+        description,
+        transaction_date,
+        category_id,
+        customer_id,
     ):
         self.accrual_date = accrual_date
         self.amount = amount
