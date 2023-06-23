@@ -154,6 +154,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
       - user_auth: []
       x-openapi-router-controller: swagger_server.controllers.user_controller
@@ -454,6 +460,12 @@ paths:
                 $ref: '#/components/schemas/GetCustomer'
         "404":
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Unauthorized
           content:
             application/json:
               schema:
@@ -821,6 +833,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
       - user_auth: []
       x-openapi-router-controller: swagger_server.controllers.category_controller
@@ -891,6 +909,12 @@ paths:
                 $ref: '#/components/schemas/Category'
         "404":
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Unauthorized
           content:
             application/json:
               schema:
