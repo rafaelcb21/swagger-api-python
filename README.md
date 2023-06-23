@@ -111,4 +111,5 @@ python -m unittest discover .\test\
 - Salvar a senha com SALT e Criptografia
 
 ## Demonstração
-Assista o video do processo de instalação e da utilização da API no seguinte [endereço]()
+Assista o video do processo de instalação e da utilização da API no seguinte [endereço](https://youtu.be/NXnNol1r6bU)
+Caso não consiga assistir, ele está no meu canal do Youtube - [Channel](https://www.youtube.com/channel/UCyDTBjGldpqvXKF3LDZCgnQ)
