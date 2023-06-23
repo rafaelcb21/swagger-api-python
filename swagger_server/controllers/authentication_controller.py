@@ -43,28 +43,28 @@ def api_vversion_auth_post(version, body=None):  # noqa: E501
             .filter(
                 db.User.email == body.login, db.User.password == body.password
             )
-            .all()
+            .first()
         )
 
-        if len(user_data) > 0:
+        if user_data is not None:
             secret_key = os.environ.get('SECRET_KEY')
             payload = {'sub': body.login}
             token = jwt.encode(payload, secret_key, algorithm='HS256')
 
-            for field in user_data:
-                response = LoginResponse(
-                    token=token,
-                    user=User(
-                        name=field.name,
-                        email=field.email,
-                        password=field.password,
-                        cnpj=field.cnpj,
-                        company_name=field.company_name,
-                        phone_number=field.phone_number,
-                    ),
-                )
+            response = LoginResponse(
+                token=token,
+                user=User(
+                    name=user_data.name,
+                    email=user_data.email,
+                    password=user_data.password,
+                    cnpj=user_data.cnpj,
+                    company_name=user_data.company_name,
+                    phone_number=user_data.phone_number,
+                ),
+            )
             session.close()
             return response, 201
+        return Error(error='Unauthorized'), 401
     return Error(error='Unauthorized'), 401
 
 
@@ -92,32 +92,31 @@ def api_vversion_users_sso_post(version, body=None):  # noqa: E501
             decoded_token = jwt.decode(
                 body.app_token, secret_key, algorithms=['HS256']
             )
-            if decoded_token['user'] != body.login:
+            if decoded_token['sub'] != body.login:
                 return Error(error='Unauthorized'), 401
 
             session = db.Session()
             user_data = (
                 session.query(db.User)
                 .filter(db.User.email == body.login)
-                .all()
+                .first()
             )
 
-            if len(user_data) > 0:
-                for field in user_data:
-                    response = LoginResponse(
-                        token=body.app_token,
-                        user=User(
-                            name=field.name,
-                            email=field.email,
-                            password=field.password,
-                            cnpj=field.cnpj,
-                            company_name=field.company_name,
-                            phone_number=field.phone_number,
-                        ),
-                    )
+            if user_data is not None:
+                response = LoginResponse(
+                    token=body.app_token,
+                    user=User(
+                        name=user_data.name,
+                        email=user_data.email,
+                        password=user_data.password,
+                        cnpj=user_data.cnpj,
+                        company_name=user_data.company_name,
+                        phone_number=user_data.phone_number,
+                    ),
+                )
                 session.close()
                 return response, 201
-
+            return Error(error='Unauthorized'), 401
         except jwt.exceptions.DecodeError:
             return Error(error='Unauthorized'), 401
 
