@@ -30,7 +30,7 @@ São no total 26 requisições (GET POST, PUT, DELETE) que o frontend irá deman
 
 1. Clonar o projeto:
 ```bash
-git clone https://git.vibbra.com.br/rafael-1686957388/invoice-management-api.git
+git clone https://github.com/rafaelcb21/swagger-api-python.git
 cd invoice-management-api
 ```
 
